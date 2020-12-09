@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
@@ -29,7 +30,7 @@ public class Layout extends JFrame{
 	FlowLayout layout;
 //	Container container;
 	
-	JLabel waktu = JLabelMaker.setFont("25:00", 50);
+	public JLabel waktu = JLabelMaker.setFont(String.format("%02d:%02d", 25, 0), 50);
 	JButton pause = ButtonMaker.makeBtn("pause");
 	JButton play = ButtonMaker.makeBtn("play");
 	JButton viewstats = ButtonMaker.makeBtn("view stats", false);
@@ -38,6 +39,11 @@ public class Layout extends JFrame{
 	JLabel dot2 = JLabelMaker.draw("outline_dot");
 	JLabel dot3 = JLabelMaker.draw("outline_dot");
 	JLabel dot4 = JLabelMaker.draw("outline_dot");
+	
+	//andre
+	public Timer countdown;
+	public int minutesRem, secondsRem;
+	timer.Timer t = new timer.Timer(this);
 	
 	JPanel j= new JPanel();
 	
@@ -68,6 +74,7 @@ public class Layout extends JFrame{
 						// TODO Auto-generated method stub
 					    play.setVisible(false);
 						pause.setVisible(true);
+						t.run();
 					}
 				}
 			);
@@ -80,6 +87,7 @@ public class Layout extends JFrame{
 						// TODO Auto-generated method stub
 						pause.setVisible(false);
 					    play.setVisible(true);
+					    t.pause();
 					}
 				}
 		);
@@ -110,6 +118,8 @@ public class Layout extends JFrame{
 					}
 				}
 			);
+		
+		t.runTimer();
 	}
 
 }
