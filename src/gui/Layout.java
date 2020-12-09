@@ -45,7 +45,7 @@ public class Layout extends JFrame{
 	public int minutesRem, secondsRem;
 	timer.Timer t = new timer.Timer(this);
 	
-	JPanel j= new JPanel();
+	public JPanel j= new JPanel();
 	
 	public Layout() {
 		// TODO Auto-generated constructor stub
@@ -63,7 +63,7 @@ public class Layout extends JFrame{
 		j.add(play);
 		j.add(pause);
 //		j.add(skip);
-		j.setBackground(ColorPicker.getColor());
+		j.setBackground(ColorPicker.getColor(null));
 		play.setVisible(false);
 		add(waktu);
 //		add(play);
@@ -103,7 +103,7 @@ public class Layout extends JFrame{
 		pause.setCursor(Cursor.getPredefinedCursor(12));
 //		skip.setCursor(Cursor.getPredefinedCursor(12));
 		
-		getContentPane().setBackground(ColorPicker.getColor());
+		getContentPane().setBackground(ColorPicker.getColor(null));
 		
 		viewstats.addActionListener(
 				new ActionListener() {

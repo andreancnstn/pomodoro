@@ -2,14 +2,15 @@ package timer;
 
 import java.awt.event.ActionEvent;
 
+import determinator.ColorPicker;
 import gui.Layout;
 import podomoroTimer.Pomodoro;
 
 public class Timer {
-	public static final int RUN_MINUTES = 25;
-	public static final int RUN_SECONDS = 0;
-	public static final int BREAK_MINUTES = 5;
-	public static final int BREAK_SECONDS = 0;
+	public static final int RUN_MINUTES = 0;
+	public static final int RUN_SECONDS = 1;
+	public static final int BREAK_MINUTES = 0;
+	public static final int BREAK_SECONDS = 1;
 	public static final int LONGBREAK_MINUTES = 15;
 	public static final int LONGBREAK_SECONDS = 0;
 	public static final int ONE_POMODORO_CYCLE = 8;
@@ -41,6 +42,8 @@ public class Timer {
 	public void runTimer() {
 		l.minutesRem = RUN_MINUTES;
 		l.secondsRem = RUN_SECONDS;
+		l.j.setBackground(ColorPicker.getColor(p.getIsRunning()));
+		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsRunning()));
 		
 		setTimeView();
 		
@@ -81,6 +84,8 @@ public class Timer {
 	private void runShortBreak() {
 		l.minutesRem = BREAK_MINUTES;
 		l.secondsRem = BREAK_SECONDS;
+		l.j.setBackground(ColorPicker.getColor(p.getIsBreak()));
+		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsBreak()));
 		l.countdown.stop();
 		
 		setTimeView();
@@ -95,6 +100,8 @@ public class Timer {
 	private void runLongBreak() {
 		l.minutesRem = LONGBREAK_MINUTES;
 		l.secondsRem = LONGBREAK_SECONDS;
+		l.j.setBackground(ColorPicker.getColor(p.getIsLongBreak()));
+		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsLongBreak()));
 		l.countdown.stop();
 		
 		setTimeView();
@@ -130,6 +137,7 @@ public class Timer {
 	}
 	
 	public void skip() {
+		//still need fix, waiting for skip button, delete upon fixing
 		p.skipBreak(l.countdown, this);
 	}
 
