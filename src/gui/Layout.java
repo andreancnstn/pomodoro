@@ -73,7 +73,7 @@ public class Layout extends JFrame{
 		play.setVisible(false);
 		skip.setVisible(false);
 		add(waktu);
-//		add(play);
+		
 		play.addActionListener(
 				new ActionListener() {
 					@Override
@@ -86,7 +86,6 @@ public class Layout extends JFrame{
 				}
 			);
 		
-//		add(pause);
 		pause.addActionListener(
 				new ActionListener() {
 					@Override
@@ -98,29 +97,34 @@ public class Layout extends JFrame{
 					}
 				}
 		);
+		
+		skip.addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						t.skip();
+					}
+				}
+			);
+		
 		add(j);
-		//TODO nanti ganti jadi dot dot, currently add nya di Timer.java (method setProgressView)
+//TODO nanti ganti jadi dot dot, currently add nya di Timer.java (method setProgressView)
 //		add(dot);add(dot2);add(dot3);add(dot4);
-
 		add(viewstats);
 
 		
 		play.setCursor(Cursor.getPredefinedCursor(12));
 		pause.setCursor(Cursor.getPredefinedCursor(12));
-//		skip.setCursor(Cursor.getPredefinedCursor(12));
+		skip.setCursor(Cursor.getPredefinedCursor(12));
 		
 		getContentPane().setBackground(ColorPicker.getColor(null));
 		
 		viewstats.addActionListener(
 				new ActionListener() {
-					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						
 						WeeklyTally tally = new WeeklyTally();
-////						tally.setLocationRelativeTo((Component)null);
-//			    		tally.setVisible(true);
 					}
 				}
 			);

@@ -21,9 +21,9 @@ public class Timer {
 	private static final int RUN_MINUTES = 0;
 	private static final int RUN_SECONDS = 3;
 	private static final int BREAK_MINUTES = 0;
-	private static final int BREAK_SECONDS = 1;
+	private static final int BREAK_SECONDS = 4;
 	private static final int LONGBREAK_MINUTES = 0;
-	private static final int LONGBREAK_SECONDS = 2;
+	private static final int LONGBREAK_SECONDS = 5;
 	private static final int ONE_POMODORO_CYCLE = 8;
 	
 	private static final int INTERVAL = 1000;
