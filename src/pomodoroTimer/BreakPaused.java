@@ -1,31 +1,31 @@
-package podomoroTimer;
+package pomodoroTimer;
 
 import javax.swing.Timer;
 
-public class NoState implements PomodoroStates {
+public class BreakPaused implements PomodoroStates {
 	
 	Pomodoro p;
 
-	public NoState(Pomodoro p) {
+	public BreakPaused(Pomodoro p) {
 		this.p = p;
 	}
 
 	@Override
 	public void pause(Timer time) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void start(Timer time) {
-		p.setPomodoroState(p.getIsRunning());
+		p.setPomodoroState(p.getIsBreak());
 		time.start();
 	}
 
 	@Override
 	public void skipBreak(Timer time, timer.Timer t) {
-		// TODO Auto-generated method stub
-
+		t.runTimer();
+		p.setPomodoroState(p.getIsRunning());
 	}
 
 }

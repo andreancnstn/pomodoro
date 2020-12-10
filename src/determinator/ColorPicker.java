@@ -1,10 +1,10 @@
 package determinator;
 import java.awt.Color;
 
-import podomoroTimer.Break;
-import podomoroTimer.LongBreak;
-import podomoroTimer.Pomodoro;
-import podomoroTimer.PomodoroStates;
+import pomodoroTimer.Break;
+import pomodoroTimer.LongBreak;
+import pomodoroTimer.Pomodoro;
+import pomodoroTimer.PomodoroStates;
 
 public class ColorPicker {
 	

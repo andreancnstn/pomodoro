@@ -1,4 +1,4 @@
-package podomoroTimer;
+package pomodoroTimer;
 
 import javax.swing.Timer;
 

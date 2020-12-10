@@ -4,20 +4,23 @@ import java.awt.event.ActionEvent;
 
 import determinator.ColorPicker;
 import gui.Layout;
-import podomoroTimer.Pomodoro;
+import log.Log;
+import pomodoroTimer.Pomodoro;
+import pomodoroTimer.PomodoroStates;
 
 public class Timer {
-	public static final int RUN_MINUTES = 0;
-	public static final int RUN_SECONDS = 1;
-	public static final int BREAK_MINUTES = 0;
-	public static final int BREAK_SECONDS = 1;
-	public static final int LONGBREAK_MINUTES = 15;
-	public static final int LONGBREAK_SECONDS = 0;
-	public static final int ONE_POMODORO_CYCLE = 8;
-	static final int INTERVAL = 1000;
-	int roundsComplete;
-	Layout l;
-	Pomodoro p = new Pomodoro();
+	private static final int RUN_MINUTES = 25;
+	private static final int RUN_SECONDS = 0;
+	private static final int BREAK_MINUTES = 5;
+	private static final int BREAK_SECONDS = 0;
+	private static final int LONGBREAK_MINUTES = 15;
+	private static final int LONGBREAK_SECONDS = 0;
+	private static final int ONE_POMODORO_CYCLE = 8;
+	private static final int INTERVAL = 1000;
+	private int roundsComplete;
+	private Layout l;
+	private Pomodoro p = new Pomodoro();
+	private Log log;
 
 	public Timer(Layout l) {
 		this.l = l;
@@ -27,12 +30,12 @@ public class Timer {
 		l.minutesRem -= 1;
 		l.secondsRem = 59;
 		
-		l.waktu.setText(String.format("%02d:%02d", l.minutesRem, l.secondsRem));
+		setTimeView();
 	}
 	
 	private void minusSecond() {
 		l.secondsRem -= 1;
-		l.waktu.setText(String.format("%02d:%02d", l.minutesRem, l.secondsRem));
+		setTimeView();
 	}
 	
 	private void setTimeView() {
@@ -62,10 +65,12 @@ public class Timer {
 					
 					if(roundsComplete == ONE_POMODORO_CYCLE) {
 						p.setPomodoroState(p.getIsLongBreak());
+						writeLogFinishPomo(p.getIsRunning());
 						runLongBreak();
 					}
 					else if (roundsComplete > 0 && roundsComplete % 2 == 0) {
 						p.setPomodoroState(p.getIsBreak());
+						writeLogFinishPomo(p.getIsRunning());
 						runShortBreak();
 					}
 				}
@@ -91,7 +96,7 @@ public class Timer {
 		setTimeView();
 		
 		l.countdown = new javax.swing.Timer(INTERVAL, (ActionEvent event) -> {
-			runBreak();
+			runBreak(p.getIsBreak());
 		});
 		
 		run();
@@ -107,16 +112,17 @@ public class Timer {
 		setTimeView();
 		
 		l.countdown = new javax.swing.Timer(INTERVAL, (ActionEvent event) -> {
-			runBreak();
+			runBreak(p.getIsLongBreak());
 		});
 		
 		run();
 	}
 	
-	private void runBreak() {
+	private void runBreak(PomodoroStates x) {
 		if (l.secondsRem == 0) {
 			if (l.minutesRem == 0) {
 				p.setPomodoroState(p.getIsRunning());
+				writeLogFinishPomo(x);
 				runTimer();
 			}
 			else {
@@ -139,6 +145,11 @@ public class Timer {
 	public void skip() {
 		//still need fix, waiting for skip button, delete upon fixing
 		p.skipBreak(l.countdown, this);
+	}
+	
+	private void writeLogFinishPomo(PomodoroStates x) {
+		log = new Log(x);
+		log.writeLog();
 	}
 
 }
