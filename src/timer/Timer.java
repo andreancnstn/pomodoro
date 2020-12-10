@@ -9,13 +9,23 @@ import pomodoroTimer.Pomodoro;
 import pomodoroTimer.PomodoroStates;
 
 public class Timer {
-	private static final int RUN_MINUTES = 25;
-	private static final int RUN_SECONDS = 0;
-	private static final int BREAK_MINUTES = 5;
-	private static final int BREAK_SECONDS = 0;
-	private static final int LONGBREAK_MINUTES = 15;
-	private static final int LONGBREAK_SECONDS = 0;
+//	private static final int RUN_MINUTES = 25;
+//	private static final int RUN_SECONDS = 0;
+//	private static final int BREAK_MINUTES = 5;
+//	private static final int BREAK_SECONDS = 0;
+//	private static final int LONGBREAK_MINUTES = 15;
+//	private static final int LONGBREAK_SECONDS = 0;
+//	private static final int ONE_POMODORO_CYCLE = 8;
+	
+	//FOR EASY TESTING
+	private static final int RUN_MINUTES = 0;
+	private static final int RUN_SECONDS = 3;
+	private static final int BREAK_MINUTES = 0;
+	private static final int BREAK_SECONDS = 1;
+	private static final int LONGBREAK_MINUTES = 0;
+	private static final int LONGBREAK_SECONDS = 2;
 	private static final int ONE_POMODORO_CYCLE = 8;
+	
 	private static final int INTERVAL = 1000;
 	private int roundsComplete;
 	private Layout l;
@@ -42,11 +52,22 @@ public class Timer {
 		l.waktu.setText(String.format("%02d:%02d", l.minutesRem, l.secondsRem));
 	}
 	
+	//TODO 1. logic ronde 2. ganti tampilan jadi progress dot dot
+	private void setProgressView(String namaState) {
+		l.currState.setText(namaState);
+		l.currRound.setText(String.valueOf(roundsComplete));
+		l.add(l.currState); l.add(l.currRound);
+	}
+	
 	public void runTimer() {
 		l.minutesRem = RUN_MINUTES;
 		l.secondsRem = RUN_SECONDS;
 		l.j.setBackground(ColorPicker.getColor(p.getIsRunning()));
 		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsRunning()));
+		
+		//wandira
+		l.skip.setVisible(false);
+		setProgressView("On Working State");
 		
 		setTimeView();
 		
@@ -93,6 +114,11 @@ public class Timer {
 		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsBreak()));
 		l.countdown.stop();
 		
+		//wandira
+		l.skip.setVisible(true);
+		setProgressView("On Short Break");
+
+		
 		setTimeView();
 		
 		l.countdown = new javax.swing.Timer(INTERVAL, (ActionEvent event) -> {
@@ -108,6 +134,10 @@ public class Timer {
 		l.j.setBackground(ColorPicker.getColor(p.getIsLongBreak()));
 		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsLongBreak()));
 		l.countdown.stop();
+		
+		//wandira
+		l.skip.setVisible(true);
+		setProgressView("On Long Break");
 		
 		setTimeView();
 		

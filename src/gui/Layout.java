@@ -34,16 +34,22 @@ public class Layout extends JFrame{
 	JButton pause = ButtonMaker.makeBtn("pause");
 	JButton play = ButtonMaker.makeBtn("play");
 	JButton viewstats = ButtonMaker.makeBtn("view stats", false);
-	JButton skip = ButtonMaker.makeBtn("skip");
-	JLabel dot = JLabelMaker.draw("twotone_dot");
-	JLabel dot2 = JLabelMaker.draw("outline_dot");
-	JLabel dot3 = JLabelMaker.draw("outline_dot");
-	JLabel dot4 = JLabelMaker.draw("outline_dot");
+	public JButton skip = ButtonMaker.makeBtn("skip");
+//	JLabel dot = JLabelMaker.draw("twotone_dot");
+//	JLabel dot2 = JLabelMaker.draw("outline_dot");
+//	JLabel dot3 = JLabelMaker.draw("outline_dot");
+//	JLabel dot4 = JLabelMaker.draw("outline_dot");
+	
+	//TODO nanti dijadikan dot dot penanda progress (ini buat sementara)
+	//wandira
+	public JLabel currRound = new JLabel();
+	public JLabel currState = new JLabel();
 	
 	//andre
 	public Timer countdown;
 	public int minutesRem, secondsRem;
 	timer.Timer t = new timer.Timer(this);
+	
 	
 	public JPanel j= new JPanel();
 	
@@ -62,9 +68,10 @@ public class Layout extends JFrame{
 		j.setPreferredSize(new Dimension(299,58));
 		j.add(play);
 		j.add(pause);
-//		j.add(skip);
+		j.add(skip);
 		j.setBackground(ColorPicker.getColor(null));
 		play.setVisible(false);
+		skip.setVisible(false);
 		add(waktu);
 //		add(play);
 		play.addActionListener(
@@ -91,11 +98,10 @@ public class Layout extends JFrame{
 					}
 				}
 		);
-//		skip.setHorizontalAlignment(JButton.LEFT);
-//		add(skip);
 		add(j);
-		add(dot);add(dot2);add(dot3);add(dot4);
-		
+		//TODO nanti ganti jadi dot dot, currently add nya di Timer.java (method setProgressView)
+//		add(dot);add(dot2);add(dot3);add(dot4);
+
 		add(viewstats);
 
 		
