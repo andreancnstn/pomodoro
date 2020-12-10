@@ -103,6 +103,8 @@ public class Layout extends JFrame{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
+						pause.setVisible(true);
+					    play.setVisible(false);
 						t.skip();
 					}
 				}
