@@ -19,11 +19,11 @@ public class Timer {
 	
 	//FOR EASY TESTING
 	private static final int RUN_MINUTES = 0;
-	private static final int RUN_SECONDS = 3;
+	private static final int RUN_SECONDS = 10;
 	private static final int BREAK_MINUTES = 0;
-	private static final int BREAK_SECONDS = 4;
+	private static final int BREAK_SECONDS = 5;
 	private static final int LONGBREAK_MINUTES = 0;
-	private static final int LONGBREAK_SECONDS = 5;
+	private static final int LONGBREAK_SECONDS = 7;
 	private static final int ONE_POMODORO_CYCLE = 8;
 	
 	private static final int INTERVAL = 1000;
@@ -60,17 +60,20 @@ public class Timer {
 	}
 	
 	public void runTimer() {
+		System.out.println("Start Main " + String.format("%d", roundsComplete));
 		l.minutesRem = RUN_MINUTES;
 		l.secondsRem = RUN_SECONDS;
+		
 		l.j.setBackground(ColorPicker.getColor(p.getIsRunning()));
 		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsRunning()));
 		
 		//wandira
+		l.play.setVisible(false);
+		l.pause.setVisible(true);
 		l.skip.setVisible(false);
 		setProgressView("On Working State");
 		
 		setTimeView();
-		System.out.println(roundsComplete);
 		
 		if(roundsComplete == ONE_POMODORO_CYCLE) {
 			l.countdown.stop();
@@ -86,11 +89,13 @@ public class Timer {
 					roundsComplete++;
 					
 					if(roundsComplete == ONE_POMODORO_CYCLE) {
+						System.out.println("Stop Long " + roundsComplete);
 						p.setPomodoroState(p.getIsLongBreak());
 						writeLogFinishPomo(p.getIsRunning());
 						runLongBreak();
 					}
 					else if (roundsComplete > 0 && roundsComplete % 2 == 0) {
+						System.out.println("Stop Short " + roundsComplete);
 						p.setPomodoroState(p.getIsBreak());
 						writeLogFinishPomo(p.getIsRunning());
 						runShortBreak();
@@ -109,6 +114,7 @@ public class Timer {
 	}
 	
 	private void runShortBreak() {
+		System.out.println("Start Short " + String.format("%d", roundsComplete));
 		l.minutesRem = BREAK_MINUTES;
 		l.secondsRem = BREAK_SECONDS;
 		l.play.setVisible(false);
@@ -122,7 +128,6 @@ public class Timer {
 		setProgressView("On Short Break");
 
 		setTimeView();
-		System.out.println(roundsComplete);
 		
 		l.countdown = new javax.swing.Timer(INTERVAL, (ActionEvent event) -> {
 			runBreak(p.getIsBreak());
@@ -132,8 +137,11 @@ public class Timer {
 	}
 	
 	private void runLongBreak() {
+		System.out.println("Start Long " + String.format("%d", roundsComplete));
 		l.minutesRem = LONGBREAK_MINUTES;
 		l.secondsRem = LONGBREAK_SECONDS;
+		l.play.setVisible(false);
+		l.pause.setVisible(true);
 		l.j.setBackground(ColorPicker.getColor(p.getIsLongBreak()));
 		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsLongBreak()));
 		l.countdown.stop();
@@ -143,12 +151,11 @@ public class Timer {
 		setProgressView("On Long Break");
 		
 		setTimeView();
-		System.out.println(roundsComplete);
 		
 		l.countdown = new javax.swing.Timer(INTERVAL, (ActionEvent event) -> {
 			runBreak(p.getIsLongBreak());
 		});
-		
+//		roundsComplete = 0;
 		run();
 	}
 	
@@ -178,9 +185,11 @@ public class Timer {
 	
 	public void skip() {
 		if (roundsComplete == ONE_POMODORO_CYCLE) {
+			l.countdown.stop();
 			roundsComplete = 0;
 		}
 		else {
+			l.countdown.stop();
 			roundsComplete++;
 		}
 		p.skipBreak(l.countdown, this);
