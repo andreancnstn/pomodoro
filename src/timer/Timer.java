@@ -17,7 +17,7 @@ public class Timer {
 	private static final int LONGBREAK_SECONDS = 0;
 	private static final int ONE_POMODORO_CYCLE = 8;
 	private static final int INTERVAL = 1000;
-	private int roundsComplete;
+	private static int roundsComplete;
 	private Layout l;
 	private Pomodoro p = new Pomodoro();
 	private Log log;
