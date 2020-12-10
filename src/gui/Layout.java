@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,12 +31,13 @@ public class Layout extends JFrame{
 	FlowLayout layout;
 //	Container container;
 	
+	static final int NUM_OF_DOTS = 4;
 	public JLabel waktu = JLabelMaker.setFont(String.format("%02d:%02d", 25, 0), 50);
-	JButton pause = ButtonMaker.makeBtn("pause");
-	JButton play = ButtonMaker.makeBtn("play");
+	public JButton pause = ButtonMaker.makeBtn("pause");
+	public JButton play = ButtonMaker.makeBtn("play");
 	JButton viewstats = ButtonMaker.makeBtn("view stats", false);
 	public JButton skip = ButtonMaker.makeBtn("skip");
-//	JLabel dot = JLabelMaker.draw("twotone_dot");
+//	JLabel dot = JLabelMaker.draw("outline_dot");
 //	JLabel dot2 = JLabelMaker.draw("outline_dot");
 //	JLabel dot3 = JLabelMaker.draw("outline_dot");
 //	JLabel dot4 = JLabelMaker.draw("outline_dot");
@@ -49,7 +51,6 @@ public class Layout extends JFrame{
 	public Timer countdown;
 	public int minutesRem, secondsRem;
 	timer.Timer t = new timer.Timer(this);
-	
 	
 	public JPanel j= new JPanel();
 	

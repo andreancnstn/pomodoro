@@ -70,6 +70,7 @@ public class Timer {
 		setProgressView("On Working State");
 		
 		setTimeView();
+		System.out.println(roundsComplete);
 		
 		if(roundsComplete == ONE_POMODORO_CYCLE) {
 			l.countdown.stop();
@@ -110,6 +111,8 @@ public class Timer {
 	private void runShortBreak() {
 		l.minutesRem = BREAK_MINUTES;
 		l.secondsRem = BREAK_SECONDS;
+		l.play.setVisible(false);
+		l.pause.setVisible(true);
 		l.j.setBackground(ColorPicker.getColor(p.getIsBreak()));
 		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsBreak()));
 		l.countdown.stop();
@@ -118,8 +121,8 @@ public class Timer {
 		l.skip.setVisible(true);
 		setProgressView("On Short Break");
 
-		
 		setTimeView();
+		System.out.println(roundsComplete);
 		
 		l.countdown = new javax.swing.Timer(INTERVAL, (ActionEvent event) -> {
 			runBreak(p.getIsBreak());
@@ -140,6 +143,7 @@ public class Timer {
 		setProgressView("On Long Break");
 		
 		setTimeView();
+		System.out.println(roundsComplete);
 		
 		l.countdown = new javax.swing.Timer(INTERVAL, (ActionEvent event) -> {
 			runBreak(p.getIsLongBreak());
@@ -173,7 +177,12 @@ public class Timer {
 	}
 	
 	public void skip() {
-		//still need fix, waiting for skip button, delete upon fixing
+		if (roundsComplete == ONE_POMODORO_CYCLE) {
+			roundsComplete = 0;
+		}
+		else {
+			roundsComplete++;
+		}
 		p.skipBreak(l.countdown, this);
 	}
 	

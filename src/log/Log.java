@@ -12,7 +12,7 @@ import pomodoroTimer.PomodoroStates;
 
 public class Log {
 	
-	private final String str1 = "done";
+	private final String str1 = ", done ";
 	private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	private final LocalDateTime dt = LocalDateTime.now();
 	private final File file = new File("log.csv");
@@ -34,7 +34,7 @@ public class Log {
 		try {
 			FileWriter write = new FileWriter(file, true);
 			write.write(dtf.format(dt));
-			write.write(", done " + str2 + "\r\n");
+			write.write(str1 + str2 + "\r\n");
 			write.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
