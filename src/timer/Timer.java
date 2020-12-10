@@ -67,9 +67,6 @@ public class Timer {
 		l.j.setBackground(ColorPicker.getColor(p.getIsRunning()));
 		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsRunning()));
 		
-		//wandira
-		l.play.setVisible(false);
-		l.pause.setVisible(true);
 		l.skip.setVisible(false);
 		setProgressView("On Working State");
 		
@@ -117,13 +114,10 @@ public class Timer {
 		System.out.println("Start Short " + String.format("%d", roundsComplete));
 		l.minutesRem = BREAK_MINUTES;
 		l.secondsRem = BREAK_SECONDS;
-		l.play.setVisible(false);
-		l.pause.setVisible(true);
 		l.j.setBackground(ColorPicker.getColor(p.getIsBreak()));
 		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsBreak()));
 		l.countdown.stop();
 		
-		//wandira
 		l.skip.setVisible(true);
 		setProgressView("On Short Break");
 
@@ -140,13 +134,10 @@ public class Timer {
 		System.out.println("Start Long " + String.format("%d", roundsComplete));
 		l.minutesRem = LONGBREAK_MINUTES;
 		l.secondsRem = LONGBREAK_SECONDS;
-		l.play.setVisible(false);
-		l.pause.setVisible(true);
 		l.j.setBackground(ColorPicker.getColor(p.getIsLongBreak()));
 		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsLongBreak()));
 		l.countdown.stop();
 		
-		//wandira
 		l.skip.setVisible(true);
 		setProgressView("On Long Break");
 		
@@ -155,7 +146,6 @@ public class Timer {
 		l.countdown = new javax.swing.Timer(INTERVAL, (ActionEvent event) -> {
 			runBreak(p.getIsLongBreak());
 		});
-//		roundsComplete = 0;
 		run();
 	}
 	
