@@ -42,22 +42,22 @@ public class WeeklyTally extends JFrame {
 
 	Dimension ukuranKotak = new Dimension(60,35);
 
-	JLabel day1 = JLabelMaker.setFont("x", 18);
-	JLabel day2 = JLabelMaker.setFont("y", 18);
-	JLabel day3 = JLabelMaker.setFont("z", 18);
-	JLabel day4 = JLabelMaker.setFont("a", 18);
-	JLabel day5 = JLabelMaker.setFont("b", 18);
-	JLabel day6 = JLabelMaker.setFont("c", 18);
-	JLabel day7 = JLabelMaker.setFont("d", 18);
+	JLabel day1 = JLabelMaker.setFont("diurus oleh susunDays()", 18);
+	JLabel day2 = JLabelMaker.setFont("diurus oleh susunDays()", 18);
+	JLabel day3 = JLabelMaker.setFont("diurus oleh susunDays()", 18);
+	JLabel day4 = JLabelMaker.setFont("diurus oleh susunDays()", 18);
+	JLabel day5 = JLabelMaker.setFont("diurus oleh susunDays()", 18);
+	JLabel day6 = JLabelMaker.setFont("diurus oleh susunDays()", 18);
+	JLabel day7 = JLabelMaker.setFont("diurus oleh susunDays()", 18);
 	JLabel[] labelDays = new JLabel[] {day1,day2,day3,day4,day5,day6,day7};
 	
-	JLabel tallyDay1 = JLabelMaker.setFont("aw", 18);
-	JLabel tallyDay2 = JLabelMaker.setFont("aw", 18);
-	JLabel tallyDay3 = JLabelMaker.setFont("aw", 18);
-	JLabel tallyDay4 = JLabelMaker.setFont("aw", 18);
-	JLabel tallyDay5 = JLabelMaker.setFont("aw", 18);
-	JLabel tallyDay6 = JLabelMaker.setFont("aw", 18);
-	JLabel tallyDay7 = JLabelMaker.setFont("aw", 18);
+	JLabel tallyDay1 = JLabelMaker.setFont("cek method susunTally(). itu yg replace ini", 18);
+	JLabel tallyDay2 = JLabelMaker.setFont("cek method susunTally(). itu yg replace ini", 18);
+	JLabel tallyDay3 = JLabelMaker.setFont("cek method susunTally(). itu yg replace ini", 18);
+	JLabel tallyDay4 = JLabelMaker.setFont("cek method susunTally(). itu yg replace ini", 18);
+	JLabel tallyDay5 = JLabelMaker.setFont("cek method susunTally(). itu yg replace ini", 18);
+	JLabel tallyDay6 = JLabelMaker.setFont("cek method susunTally(). itu yg replace ini", 18);
+	JLabel tallyDay7 = JLabelMaker.setFont("cek method susunnTally(). itu yg replace ini", 18);
 	JLabel labelTally[] = new JLabel[] {tallyDay1,tallyDay2,tallyDay3,tallyDay4,tallyDay5,tallyDay6,tallyDay7};
 	
 	
@@ -122,22 +122,22 @@ public class WeeklyTally extends JFrame {
 		teli.add(tallyDay7);
 		
 		// TODO border ini cuma buat ngecek luas area label. SetBorder bisa didelete.
-				LineBorder b1 = new LineBorder(Color.BLACK);
-				LineBorder b2 = new LineBorder(Color.RED);
-				day1.setBorder(b1);
-				day2.setBorder(b1);
-				day3.setBorder(b1);
-				day4.setBorder(b1);
-				day5.setBorder(b1);
-				day6.setBorder(b1);
-				day7.setBorder(b1);
-				tallyDay1.setBorder(b2);
-				tallyDay2.setBorder(b2);
-				tallyDay3.setBorder(b2);
-				tallyDay4.setBorder(b2);
-				tallyDay5.setBorder(b2);
-				tallyDay6.setBorder(b2);
-				tallyDay7.setBorder(b2);	
+//				LineBorder b1 = new LineBorder(Color.BLACK);
+//				LineBorder b2 = new LineBorder(Color.RED);
+//				day1.setBorder(b1);
+//				day2.setBorder(b1);
+//				day3.setBorder(b1);
+//				day4.setBorder(b1);
+//				day5.setBorder(b1);
+//				day6.setBorder(b1);
+//				day7.setBorder(b1);
+//				tallyDay1.setBorder(b2);
+//				tallyDay2.setBorder(b2);
+//				tallyDay3.setBorder(b2);
+//				tallyDay4.setBorder(b2);
+//				tallyDay5.setBorder(b2);
+//				tallyDay6.setBorder(b2);
+//				tallyDay7.setBorder(b2);	
 	}
 
 	
@@ -146,6 +146,7 @@ public class WeeklyTally extends JFrame {
 			LocalDate dateToday = LocalDate.now().plusDays(i+1);
 			DayOfWeek today = dateToday.getDayOfWeek();
 			labelDays[i].setText(today.getDisplayName(TextStyle.SHORT, Locale.US));
+			labelDays[i].setHorizontalAlignment(JLabel.LEFT);
 		}
 	}
 	
@@ -155,6 +156,7 @@ public class WeeklyTally extends JFrame {
 		for(int i=0;i<7;i++) {
 //			labelTally[i].setText("blabla hasil logic");
 			labelTally[i].setText("0"); //cuma buat contoh bisa overwrite deklarasi di pas new label di atas
+			labelTally[i].setHorizontalAlignment(JLabel.LEFT);
 		}
 	}
 
