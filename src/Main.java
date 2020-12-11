@@ -17,11 +17,14 @@ import java.awt.event.MouseListener;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -38,6 +41,7 @@ import javax.swing.border.EmptyBorder;
 
 import determinator.ColorPicker;
 import gui.Layout;
+//import gui.SimpleDateFormat;
 import maker.ButtonMaker;
 import maker.ImageIconMaker;
 import maker.JLabelMaker;
@@ -45,6 +49,7 @@ import maker.JLabelMaker;
 public class Main {
 //	@SuppressWarnings("null")
 	public Main(){
+		
 	}
 	
 

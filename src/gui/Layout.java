@@ -127,7 +127,7 @@ public class Layout extends JFrame{
 				new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						WeeklyTally tally = new WeeklyTally();
+						new WeeklyTally();
 					}
 				}
 			);
