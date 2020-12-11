@@ -29,25 +29,15 @@ import maker.JLabelMaker;
 public class Layout extends JFrame{
 	
 	FlowLayout layout;
-//	Container container;
 	
-	static final int NUM_OF_DOTS = 4;
 	public JLabel waktu = JLabelMaker.setFont(String.format("%02d:%02d", 25, 0), 50);
 	public JButton pause = ButtonMaker.makeBtn("pause");
 	public JButton play = ButtonMaker.makeBtn("play");
 	JButton viewstats = ButtonMaker.makeBtn("view stats", false);
 	public JButton skip = ButtonMaker.makeBtn("skip");
-//	JLabel dot = JLabelMaker.draw("outline_dot");
-//	JLabel dot2 = JLabelMaker.draw("outline_dot");
-//	JLabel dot3 = JLabelMaker.draw("outline_dot");
-//	JLabel dot4 = JLabelMaker.draw("outline_dot");
 	
-	//TODO nanti dijadikan dot dot penanda progress (ini buat sementara)
-	//wandira
-	public JLabel currRound = new JLabel();
-	public JLabel currState = new JLabel();
-	
-	//andre
+	public JPanel currRound = new JPanel(new FlowLayout());
+
 	public Timer countdown;
 	public int minutesRem, secondsRem;
 	timer.Timer t = new timer.Timer(this);
@@ -55,15 +45,12 @@ public class Layout extends JFrame{
 	public JPanel j= new JPanel();
 	
 	public Layout() {
-		// TODO Auto-generated constructor stub
 		super("Pomodoro");
 		setLocationRelativeTo((Component)null);
 		ImageIcon tomat = ImageIconMaker.ImageIconMaker("tomato");
 		this.setIconImage(tomat.getImage());
 		
 		layout = new FlowLayout();
-//		layout =new FlowLayout(1, 10, 0);
-//		container = getContentPane();
 		setLayout(layout);
 		
 		j.setPreferredSize(new Dimension(299,58));
@@ -74,7 +61,8 @@ public class Layout extends JFrame{
 		play.setVisible(false);
 		skip.setVisible(false);
 		add(waktu);
-		
+		currRound.setPreferredSize(new Dimension(100,20));
+		add(currRound);
 		play.addActionListener(
 				new ActionListener() {
 					@Override

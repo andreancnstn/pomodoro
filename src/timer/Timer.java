@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import determinator.ColorPicker;
 import gui.Layout;
 import log.Log;
+import maker.JLabelMaker;
 import pomodoroTimer.Pomodoro;
 import pomodoroTimer.PomodoroStates;
 
@@ -19,7 +20,7 @@ public class Timer {
 	
 	//FOR EASY TESTING
 	private static final int RUN_MINUTES = 0;
-	private static final int RUN_SECONDS = 10;
+	private static final int RUN_SECONDS = 2;
 	private static final int BREAK_MINUTES = 0;
 	private static final int BREAK_SECONDS = 5;
 	private static final int LONGBREAK_MINUTES = 0;
@@ -28,7 +29,14 @@ public class Timer {
 	
 	private static final int INTERVAL = 1000;
 	private static int roundsComplete;
-	private Layout l;
+	private static int jumlahStartPomodoro;
+	
+	private static int work;
+	private static int rest;
+	private static int iterasi = 0;
+	private static boolean ongoing = true;
+	
+	Layout l;
 	private Pomodoro p = new Pomodoro();
 	private Log log;
 
@@ -52,23 +60,50 @@ public class Timer {
 		l.waktu.setText(String.format("%02d:%02d", l.minutesRem, l.secondsRem));
 	}
 	
-	//TODO 1. logic ronde 2. ganti tampilan jadi progress dot dot
-	private void setProgressView(String namaState) {
-		l.currState.setText(namaState);
-		l.currRound.setText(String.valueOf(roundsComplete));
-		l.add(l.currState); l.add(l.currRound);
+	private void setProgressView(String namaState) { //string ini udh gadipake btw
+													//tapi incase mau buat penanda gw masih blm hapus
+
+		for(int i=0;i<work;i++) {
+			l.currRound.add(JLabelMaker.draw("filled_dot"));
+		}
+	
+	//TODO kalau mau ganti logic if(state lagi istirahat)
+	//if(p.getState == break || p.getState == longbreak) ???
+		if(ongoing) {
+				l.currRound.add(JLabelMaker.draw("twotone_dot"));
+		}
+		
+		int[] jumlahBijiKosong = {3,3,2,2,1,1,0,0};
+		for(int i=0;i<jumlahBijiKosong[iterasi];i++) {
+			l.currRound.add(JLabelMaker.draw("outline_dot"));
+		}
+		iterasi++;
+		
+		if(work==4) {
+			rest=0;
+			work=0;
+			iterasi=0;
+		}
+
 	}
 	
 	public void runTimer() {
+		ongoing=true;
+
+		l.currRound.removeAll();
 		System.out.println("Start Main " + String.format("%d", roundsComplete));
 		l.minutesRem = RUN_MINUTES;
 		l.secondsRem = RUN_SECONDS;
 		
 		l.j.setBackground(ColorPicker.getColor(p.getIsRunning()));
 		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsRunning()));
+		l.currRound.setBackground(ColorPicker.getColor(p.getIsRunning()));;
 		
 		l.skip.setVisible(false);
 		setProgressView("On Working State");
+		work++;
+		
+		l.currRound.revalidate();
 		
 		setTimeView();
 		
@@ -89,12 +124,18 @@ public class Timer {
 						System.out.println("Stop Long " + roundsComplete);
 						p.setPomodoroState(p.getIsLongBreak());
 						writeLogFinishPomo(p.getIsRunning());
+						ongoing=false;
+						l.currRound.removeAll();
+						l.currRound.revalidate();
 						runLongBreak();
 					}
 					else if (roundsComplete > 0 && roundsComplete % 2 == 0) {
 						System.out.println("Stop Short " + roundsComplete);
 						p.setPomodoroState(p.getIsBreak());
 						writeLogFinishPomo(p.getIsRunning());
+						ongoing=false;
+						l.currRound.removeAll();
+						l.currRound.revalidate();
 						runShortBreak();
 					}
 				}
@@ -115,11 +156,13 @@ public class Timer {
 		l.minutesRem = BREAK_MINUTES;
 		l.secondsRem = BREAK_SECONDS;
 		l.j.setBackground(ColorPicker.getColor(p.getIsBreak()));
+		l.currRound.setBackground(ColorPicker.getColor(p.getIsBreak()));
 		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsBreak()));
 		l.countdown.stop();
 		
 		l.skip.setVisible(true);
 		setProgressView("On Short Break");
+		rest++;
 
 		setTimeView();
 		
@@ -135,11 +178,13 @@ public class Timer {
 		l.minutesRem = LONGBREAK_MINUTES;
 		l.secondsRem = LONGBREAK_SECONDS;
 		l.j.setBackground(ColorPicker.getColor(p.getIsLongBreak()));
+		l.currRound.setBackground(ColorPicker.getColor(p.getIsLongBreak()));
 		l.getContentPane().setBackground(ColorPicker.getColor(p.getIsLongBreak()));
 		l.countdown.stop();
 		
 		l.skip.setVisible(true);
 		setProgressView("On Long Break");
+		rest++;
 		
 		setTimeView();
 		
@@ -180,7 +225,10 @@ public class Timer {
 		}
 		else {
 			l.countdown.stop();
+
+			System.out.println("else skip ronde1: "+roundsComplete);
 			roundsComplete++;
+			System.out.println("else skip ronde2: "+roundsComplete);
 		}
 		p.skipBreak(l.countdown, this);
 	}

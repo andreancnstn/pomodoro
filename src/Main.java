@@ -60,7 +60,7 @@ public class Main {
 		l.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		l.setSize(300,200);
 		l.setVisible(true);
-		l.setResizable(false);
+//		l.setResizable(false);
 	}
 
 
