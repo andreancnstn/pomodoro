@@ -43,8 +43,8 @@ public class WeeklyTally extends JFrame {
 	BorderLayout layout;
 	Container container;
 	
-	JPanel days = new JPanel();
-	JPanel teli = new JPanel();
+	public JPanel days = new JPanel();
+	public JPanel teli = new JPanel();
 
 	Dimension ukuranKotak = new Dimension(60,35);
 
@@ -76,8 +76,6 @@ public class WeeklyTally extends JFrame {
 		setSize(520,115);
 		setResizable(false);
 		setVisible(true);
-		layout = new BorderLayout();
-		setLayout(layout);
 		
 		masukinLabelKePanel();
 		add(days, BorderLayout.NORTH);
@@ -85,7 +83,10 @@ public class WeeklyTally extends JFrame {
 	}
 
 
-	private void masukinLabelKePanel() {
+	public void masukinLabelKePanel() {
+
+		layout = new BorderLayout();
+		setLayout(layout);
 		
 		day1.setPreferredSize(ukuranKotak);
 		day2.setPreferredSize(ukuranKotak);

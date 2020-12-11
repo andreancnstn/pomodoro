@@ -1,9 +1,11 @@
 package timer;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
 import determinator.ColorPicker;
 import gui.Layout;
+import gui.WeeklyTally;
 import log.Log;
 import maker.JLabelMaker;
 import pomodoroTimer.NoState;
@@ -29,6 +31,7 @@ public class Timer {
 	private static boolean ongoing = true;
 	
 	private Layout l;
+	private WeeklyTally t;
 	private Pomodoro p = new Pomodoro();
 	private Log log;
 
@@ -76,6 +79,13 @@ public class Timer {
 
 	}
 	
+	private void setWeeklyView() {
+		l.weekly.masukinLabelKePanel();
+		l.weekly.add(l.weekly.days, BorderLayout.NORTH);
+		l.weekly.add(l.weekly.teli, BorderLayout.SOUTH);
+		l.weekly.repaint();
+	}
+	
 	public void runTimer() {
 		ongoing=true;
 
@@ -107,6 +117,7 @@ public class Timer {
 			if (l.secondsRem == 0) {
 				if (l.minutesRem == 0) {
 					roundsComplete++;
+					setWeeklyView();
 					
 					if(roundsComplete == ONE_POMODORO_CYCLE) {
 						p.setPomodoroState(p.getIsLongBreak());

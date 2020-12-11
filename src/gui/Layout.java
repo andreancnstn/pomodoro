@@ -43,9 +43,11 @@ public class Layout extends JFrame{
 	timer.Timer t = new timer.Timer(this);
 	
 	public JPanel j= new JPanel();
+	public WeeklyTally weekly = new WeeklyTally();
 	
 	public Layout() {
 		super("Pomodoro");
+		weekly.setVisible(false);
 		setLocationRelativeTo((Component)null);
 		ImageIcon tomat = ImageIconMaker.ImageIconMaker("tomato");
 		this.setIconImage(tomat.getImage());
@@ -113,7 +115,7 @@ public class Layout extends JFrame{
 				new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						new WeeklyTally();
+						weekly.setVisible(true);
 					}
 				}
 			);
