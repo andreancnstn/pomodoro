@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import pomodoroTimer.Break;
@@ -13,8 +14,6 @@ import pomodoroTimer.PomodoroStates;
 public class Log {
 	
 	private final String str1 = ", done ";
-	private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-	private final LocalDateTime dt = LocalDateTime.now();
 	private final File file = new File("log.csv");
 	private String str2;
 
@@ -33,13 +32,18 @@ public class Log {
 	public void writeLog() {
 		try {
 			FileWriter write = new FileWriter(file, true);
-			write.write(dtf.format(dt));
+			write.write(getCurrentLocalDateTime());
 			write.write(str1 + str2 + "\r\n");
 			write.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public String getCurrentLocalDateTime() {
+	    return ZonedDateTime.now()
+	       .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ssX"));
 	}
 
 }
