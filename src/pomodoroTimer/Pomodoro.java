@@ -29,6 +29,10 @@ public class Pomodoro {
 		this.pomoState = newState;
 	}
 	
+	public PomodoroStates getPomodoroState() {
+		return pomoState;
+	}
+	
 	public void pause(Timer time) {
 		pomoState.pause(time);
 	}

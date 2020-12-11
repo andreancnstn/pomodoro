@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import pomodoroTimer.Break;
 import pomodoroTimer.LongBreak;
 import pomodoroTimer.PomodoroStates;
+import pomodoroTimer.TimerRun;
 
 public class Log {
 	
@@ -24,7 +25,7 @@ public class Log {
 		else if (x instanceof LongBreak) {
 			this.str2 = "long break";
 		}
-		else {
+		else if (x instanceof TimerRun){
 			this.str2 = "pomodoro";
 		}
 	}

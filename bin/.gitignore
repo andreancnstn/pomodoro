@@ -1,14 +1,5 @@
-/Main.class
-/Pomodoro.class
-/determinator/
 /gui/
 /log/
-/maker/
-/outline_dot.png
-/pause.png
-/play.png
-/pomodoroTimer/
-/skip.png
 /timer/
-/tomato.png
-/twotone_dot.png
+/pomodoroTimer/
+/determinator/

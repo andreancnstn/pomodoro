@@ -100,8 +100,6 @@ public class Layout extends JFrame{
 			);
 		
 		add(j);
-//TODO nanti ganti jadi dot dot, currently add nya di Timer.java (method setProgressView)
-//		add(dot);add(dot2);add(dot3);add(dot4);
 		add(viewstats);
 
 		

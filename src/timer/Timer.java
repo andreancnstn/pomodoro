@@ -6,37 +6,29 @@ import determinator.ColorPicker;
 import gui.Layout;
 import log.Log;
 import maker.JLabelMaker;
+import pomodoroTimer.NoState;
 import pomodoroTimer.Pomodoro;
 import pomodoroTimer.PomodoroStates;
+import pomodoroTimer.TimerRun;
 
 public class Timer {
-//	private static final int RUN_MINUTES = 25;
-//	private static final int RUN_SECONDS = 0;
-//	private static final int BREAK_MINUTES = 5;
-//	private static final int BREAK_SECONDS = 0;
-//	private static final int LONGBREAK_MINUTES = 15;
-//	private static final int LONGBREAK_SECONDS = 0;
-//	private static final int ONE_POMODORO_CYCLE = 8;
-	
-	//FOR EASY TESTING
-	private static final int RUN_MINUTES = 0;
-	private static final int RUN_SECONDS = 2;
-	private static final int BREAK_MINUTES = 0;
-	private static final int BREAK_SECONDS = 5;
-	private static final int LONGBREAK_MINUTES = 0;
-	private static final int LONGBREAK_SECONDS = 7;
+	private static final int RUN_MINUTES = 25;
+	private static final int RUN_SECONDS = 0;
+	private static final int BREAK_MINUTES = 5;
+	private static final int BREAK_SECONDS = 0;
+	private static final int LONGBREAK_MINUTES = 15;
+	private static final int LONGBREAK_SECONDS = 0;
 	private static final int ONE_POMODORO_CYCLE = 8;
 	
 	private static final int INTERVAL = 1000;
 	private static int roundsComplete;
-	private static int jumlahStartPomodoro;
 	
 	private static int work;
 	private static int rest;
 	private static int iterasi = 0;
 	private static boolean ongoing = true;
 	
-	Layout l;
+	private Layout l;
 	private Pomodoro p = new Pomodoro();
 	private Log log;
 
@@ -60,16 +52,13 @@ public class Timer {
 		l.waktu.setText(String.format("%02d:%02d", l.minutesRem, l.secondsRem));
 	}
 	
-	private void setProgressView(String namaState) { //string ini udh gadipake btw
-													//tapi incase mau buat penanda gw masih blm hapus
+	private void setProgressView() { 
 
 		for(int i=0;i<work;i++) {
 			l.currRound.add(JLabelMaker.draw("filled_dot"));
 		}
-	
-	//TODO kalau mau ganti logic if(state lagi istirahat)
-	//if(p.getState == break || p.getState == longbreak) ???
-		if(ongoing) {
+		
+		if(p.getPomodoroState() instanceof TimerRun || p.getPomodoroState() instanceof NoState) {
 				l.currRound.add(JLabelMaker.draw("twotone_dot"));
 		}
 		
@@ -91,7 +80,6 @@ public class Timer {
 		ongoing=true;
 
 		l.currRound.removeAll();
-		System.out.println("Start Main " + String.format("%d", roundsComplete));
 		l.minutesRem = RUN_MINUTES;
 		l.secondsRem = RUN_SECONDS;
 		
@@ -100,7 +88,7 @@ public class Timer {
 		l.currRound.setBackground(ColorPicker.getColor(p.getIsRunning()));;
 		
 		l.skip.setVisible(false);
-		setProgressView("On Working State");
+		setProgressView();
 		work++;
 		
 		l.currRound.revalidate();
@@ -121,7 +109,6 @@ public class Timer {
 					roundsComplete++;
 					
 					if(roundsComplete == ONE_POMODORO_CYCLE) {
-						System.out.println("Stop Long " + roundsComplete);
 						p.setPomodoroState(p.getIsLongBreak());
 						writeLogFinishPomo(p.getIsRunning());
 						ongoing=false;
@@ -130,7 +117,6 @@ public class Timer {
 						runLongBreak();
 					}
 					else if (roundsComplete > 0 && roundsComplete % 2 == 0) {
-						System.out.println("Stop Short " + roundsComplete);
 						p.setPomodoroState(p.getIsBreak());
 						writeLogFinishPomo(p.getIsRunning());
 						ongoing=false;
@@ -152,7 +138,6 @@ public class Timer {
 	}
 	
 	private void runShortBreak() {
-		System.out.println("Start Short " + String.format("%d", roundsComplete));
 		l.minutesRem = BREAK_MINUTES;
 		l.secondsRem = BREAK_SECONDS;
 		l.j.setBackground(ColorPicker.getColor(p.getIsBreak()));
@@ -161,7 +146,7 @@ public class Timer {
 		l.countdown.stop();
 		
 		l.skip.setVisible(true);
-		setProgressView("On Short Break");
+		setProgressView();
 		rest++;
 
 		setTimeView();
@@ -174,7 +159,6 @@ public class Timer {
 	}
 	
 	private void runLongBreak() {
-		System.out.println("Start Long " + String.format("%d", roundsComplete));
 		l.minutesRem = LONGBREAK_MINUTES;
 		l.secondsRem = LONGBREAK_SECONDS;
 		l.j.setBackground(ColorPicker.getColor(p.getIsLongBreak()));
@@ -183,7 +167,7 @@ public class Timer {
 		l.countdown.stop();
 		
 		l.skip.setVisible(true);
-		setProgressView("On Long Break");
+		setProgressView();
 		rest++;
 		
 		setTimeView();
@@ -225,10 +209,7 @@ public class Timer {
 		}
 		else {
 			l.countdown.stop();
-
-			System.out.println("else skip ronde1: "+roundsComplete);
 			roundsComplete++;
-			System.out.println("else skip ronde2: "+roundsComplete);
 		}
 		p.skipBreak(l.countdown, this);
 	}

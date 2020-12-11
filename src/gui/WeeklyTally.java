@@ -10,13 +10,19 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Scanner;
+import java.util.Vector;
+import java.util.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -60,10 +66,10 @@ public class WeeklyTally extends JFrame {
 	JLabel tallyDay7 = JLabelMaker.setFont("cek method susunnTally(). itu yg replace ini", 18);
 	JLabel labelTally[] = new JLabel[] {tallyDay1,tallyDay2,tallyDay3,tallyDay4,tallyDay5,tallyDay6,tallyDay7};
 	
+	static Integer tally[] = new Integer[7];
 	
 	public WeeklyTally() {
 		
-		// FRAME SETTINGS
 		super("Pomodoro");
 		ImageIcon tomat = ImageIconMaker.ImageIconMaker("tomato");
 		this.setIconImage(tomat.getImage());
@@ -73,12 +79,9 @@ public class WeeklyTally extends JFrame {
 		layout = new BorderLayout();
 		setLayout(layout);
 		
-		//PUT ALL LABELS TO PANEL DAYS AND TELI
 		masukinLabelKePanel();
-		//PUT PANEL DAYS AND TELI TO FRAME
 		add(days, BorderLayout.NORTH);
 		add(teli, BorderLayout.SOUTH);
-		
 	}
 
 
@@ -120,31 +123,13 @@ public class WeeklyTally extends JFrame {
 		teli.add(tallyDay5);
 		teli.add(tallyDay6);
 		teli.add(tallyDay7);
-		
-		// TODO border ini cuma buat ngecek luas area label. SetBorder bisa didelete.
-//				LineBorder b1 = new LineBorder(Color.BLACK);
-//				LineBorder b2 = new LineBorder(Color.RED);
-//				day1.setBorder(b1);
-//				day2.setBorder(b1);
-//				day3.setBorder(b1);
-//				day4.setBorder(b1);
-//				day5.setBorder(b1);
-//				day6.setBorder(b1);
-//				day7.setBorder(b1);
-//				tallyDay1.setBorder(b2);
-//				tallyDay2.setBorder(b2);
-//				tallyDay3.setBorder(b2);
-//				tallyDay4.setBorder(b2);
-//				tallyDay5.setBorder(b2);
-//				tallyDay6.setBorder(b2);
-//				tallyDay7.setBorder(b2);	
 	}
 
 	
 	private void susunDays() {
 		for(int i=0;i<7;i++) {
-			LocalDate dateToday = LocalDate.now().plusDays(i+1);
-			DayOfWeek today = dateToday.getDayOfWeek();
+			LocalDate date = LocalDate.now().plusDays(i+1);
+			DayOfWeek today = date.getDayOfWeek();
 			labelDays[i].setText(today.getDisplayName(TextStyle.SHORT, Locale.US));
 			labelDays[i].setHorizontalAlignment(JLabel.LEFT);
 		}
@@ -152,13 +137,43 @@ public class WeeklyTally extends JFrame {
 	
 	
 	private void susunTally() {
-		// TODO bikin logic untuk baca jumlah entri each day selama seminggu ini
+		for(int i = 0; i < 7; i++) {
+			tally[i] = 0;
+		}
+		
+		Scanner scan;
+		try {
+			scan = new Scanner(new File("log.csv"));
+			scan.useDelimiter("\n");
+			
+			while (scan.hasNext()) {
+				String date = scan.next();
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US);
+				if(date.contains("done pomodoro")) {
+					String str1 = date.substring(0, date.indexOf(" "));
+					LocalDate x = LocalDate.parse(str1);
+					addTally(x);
+				}
+			}
+			
+			scan.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		for(int i=0;i<7;i++) {
-//			labelTally[i].setText("blabla hasil logic");
-			labelTally[i].setText("0"); //cuma buat contoh bisa overwrite deklarasi di pas new label di atas
+			labelTally[i].setText(tally[i] + "");
 			labelTally[i].setHorizontalAlignment(JLabel.LEFT);
 		}
 	}
-
+	
+	private void addTally(LocalDate x) {
+		for (int i = 0; i < 7; i++) {
+			if (x.toString().equals(LocalDate.now().minusDays(i).toString())) {
+				tally[7-1-i]++;
+			}
+		}
+	}
 
 }
